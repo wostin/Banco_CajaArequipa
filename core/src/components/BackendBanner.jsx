@@ -7,6 +7,9 @@ export default function BackendBanner() {
   const [estado, setEstado] = useState('checking'); // checking | ok | down
 
   useEffect(() => {
+    // En producción el backend está en Render, no mostrar aviso
+    if (import.meta.env.PROD) { setEstado('ok'); return; }
+
     let vivo = true;
     const check = () => {
       api.get('/api/health', { timeout: 4000 })
