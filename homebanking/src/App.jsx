@@ -136,6 +136,8 @@ function RootRedirect() {
 }
 
 // ── App ────────────────────────────────────────────────
+const CORE_URL = import.meta.env.VITE_CORE_URL || 'http://localhost:5173';
+
 export default function App() {
   // Mostrar pantalla de configuración si faltan las variables de .env
   if (!supabaseConfigured) return <ConfigError />;
@@ -160,7 +162,7 @@ export default function App() {
             <Route path="ahorro"        element={<HBAhorro />} />
           </Route>
 
-          <Route path="/core/*" element={<PortalAviso destino="Core Financiero del personal" url="http://localhost:5173" />} />
+          <Route path="/core/*" element={<PortalAviso destino="Core Financiero del personal" url={CORE_URL} />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

@@ -18,7 +18,7 @@ import CoreClientes  from './pages/core/Clientes';
 import Layout from './components/Layout';
 
 // URL del portal del cliente (otra app)
-const HOMEBANKING_URL = 'http://localhost:5174';
+const HOMEBANKING_URL = import.meta.env.VITE_HOMEBANKING_URL || 'http://localhost:5174';
 
 // Roles que SÍ pueden usar el Core
 const ROLES_CORE = ['asesor','administrador','jefe_regional','riesgos','comite','analista','admin','gerente'];

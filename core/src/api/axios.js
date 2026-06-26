@@ -4,7 +4,7 @@ import { supabase } from './supabase.js';
 
 // ── Cliente base ──────────────────────────────────────
 const api = axios.create({
-  baseURL: '',           // proxy Vite: /api → localhost:3000
+  baseURL: import.meta.env.PROD ? (import.meta.env.VITE_API_URL || '') : '',  // prod: Render · dev: proxy Vite
   timeout: 8000,         // 8 s máximo por petición (falla rápido si algo no responde)
   headers: { 'Content-Type': 'application/json' },
 });

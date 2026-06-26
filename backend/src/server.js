@@ -22,11 +22,13 @@ const PORT = parseInt(process.env.PORT || '3000');
 
 // ── CORS ──────────────────────────────────────────────
 const allowed = [
-  process.env.FRONTEND_URL || 'http://localhost:5173',
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:4173',
   'http://localhost:4174',
+  // URLs de producción (Vercel), en la env FRONTEND_URLS separadas por coma
+  ...(process.env.FRONTEND_URLS || process.env.FRONTEND_URL || '')
+      .split(',').map(s => s.trim()).filter(Boolean),
 ];
 app.use(cors({
   origin: (origin, cb) =>
