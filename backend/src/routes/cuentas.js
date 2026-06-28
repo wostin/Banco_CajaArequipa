@@ -269,6 +269,7 @@ router.get('/:id', async (req, res) => {
     .from('cuentas')
     .select('*')
     .eq('id', req.params.id)
+    .eq('user_id', req.user.id)   // ← FIX IDOR
     .single();
 
   if (error) return res.status(404).json({ success: false, message: 'Cuenta no encontrada' });
@@ -278,9 +279,8 @@ router.get('/:id', async (req, res) => {
 // GET /api/cuentas/:id/resumen — últimas transacciones + estadísticas
 router.get('/:id/resumen', async (req, res) => {
   const sb = supabaseAsUser(req.token);
-
   const [{ data: cuenta }, { data: transacciones }] = await Promise.all([
-    sb.from('cuentas').select('*').eq('id', req.params.id).single(),
+    sb.from('cuentas').select('*').eq('id', req.params.id).eq('user_id', req.user.id).single(),
     sb.from('transacciones')
       .select('tipo, monto, descripcion, canal, fecha')
       .eq('cuenta_id', req.params.id)
